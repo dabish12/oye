@@ -3,5 +3,5 @@
 // Example: 'https://drvu-exam-default-rtdb.firebaseio.com'
 // Leave it empty ('') to work without Firebase.
 window.DRVU_CONFIG={
-  cloudUrl:'https://console.firebase.google.com/project/dembi-aded9/database/dembi-aded9-default-rtdb/data/~2F'
+  cloudUrl:''
 };

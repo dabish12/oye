@@ -12,12 +12,14 @@ load();
 /* ---------- CLOUD SYNC (lets students use any device) ---------- */
 const CLOUD_URL=(window.DRVU_CONFIG&&DRVU_CONFIG.cloudUrl)||''; // set in config.js
 let CLOUD=CLOUD_URL,skew=0,pend=[],sync='off',rem=false,busy=0;
-try{CLOUD=localStorage.getItem('drvu_cloud')||CLOUD_URL;pend=JSON.parse(localStorage.getItem('drvu_q')||'[]')}catch(e){}
+try{CLOUD=CLOUD_URL||localStorage.getItem('drvu_cloud')||'';pend=JSON.parse(localStorage.getItem('drvu_q')||'[]')}catch(e){}
+const nu=u=>{u=(u||'').trim();if(!u)return '';if(!/^https?:\/\//i.test(u))u='https://'+u;return u.replace(/\/drvu\/?$/,'').replace(/\.json$/,'').replace(/\/+$/,'')};
+CLOUD=nu(CLOUD);
 const now=()=>Date.now()+skew;
 const ky=u=>u.replace(/[%.$#\[\]\/]/g,c=>'%'+c.charCodeAt(0).toString(16).padStart(2,'0')),pk=u=>encodeURIComponent(ky(u)),uk=k=>decodeURIComponent(k);
 const eC=o=>o&&{...o,ans:JSON.stringify(o.ans||{})};
 const dC=o=>o&&{...o,ans:typeof o.ans==='string'?JSON.parse(o.ans||'{}'):(o.ans||{})};
-async function rq(p,m,b){const r=await fetch(CLOUD.replace(/\/+$/,'')+'/drvu'+(p?'/'+p:'')+'.json',{method:m||'GET',headers:b!==undefined?{'Content-Type':'application/json'}:{},body:b!==undefined?JSON.stringify(b):undefined});if(!r.ok)throw 0;return r.json()}
+async function rq(p,m,b){const r=await fetch(CLOUD.replace(/\/+$/,'')+'/drvu'+(p?'/'+p:'')+'.json',{method:m||'GET',headers:b!==undefined?{'Content-Type':'application/json'}:{},body:b!==undefined?JSON.stringify(b):undefined});if(!r.ok)throw {status:r.status};return r.json()}
 function put(p,v){if(!CLOUD)return;pend=pend.filter(x=>x.p!==p);pend.push({p,v});sq();flush()}
 function sq(){try{localStorage.setItem('drvu_q',JSON.stringify(pend))}catch(e){}}
 async function flush(){if(busy||!CLOUD)return;busy=1;try{while(pend.length){const x=pend[0];await rq(x.p,x.v===null?'DELETE':'PUT',x.v===null?undefined:x.v);pend.shift();sq()}sync='on'}catch(e){sync='off'}busy=0;badge()}
@@ -29,8 +31,8 @@ async function pull(){if(!CLOUD)return;try{await flush();skew=(await rq('tick','
 function pushAll(){put('students',D.students);put('exam',D.exam);Object.keys(D.results).forEach(u=>put('results/'+pk(u),eC(D.results[u])));Object.keys(D.prog).forEach(u=>put('prog/'+pk(u),eC(D.prog[u])))}
 function saveProg(u){save();put('prog/'+pk(u),eC(D.prog[u]))}
 function badge(){const e=$('#sb');if(!e)return;const ok=sync==='on'&&!pend.length;e.className='bd '+(!CLOUD?'n':ok?'g':'y');e.textContent=!CLOUD?'Local only':ok?'● Synced':'⚠ '+(pend.length?pend.length+' pending':'Offline')}
-async function chk(){const e=$('#cs');if(!e)return;if(!CLOUD){e.innerHTML=window.DRVU_DATA?'<b class="ok">● Exam data loaded</b>':'<b class="no">● No exam data or server found.</b> Accounts will not work on this device.';return}e.textContent='Checking server…';try{await rq('tick');e.innerHTML='<b class="ok">● Server connected</b>'}catch(x){e.innerHTML='<b class="no">● Cannot reach the server.</b> Check the URL and the database rules.'}}
-function setCloud(){const u=prompt('Paste the Firebase Realtime Database URL (leave empty = this device only):',CLOUD);if(u===null)return;CLOUD=u.trim();try{localStorage.setItem('drvu_cloud',CLOUD)}catch(e){}alert(CLOUD?'Server saved on this device.':'Cloud sync turned off.');chk();if(me&&me.role==='a')pull().then(admin)}
+async function chk(){const e=$('#cs');if(!e)return;if(!CLOUD){e.innerHTML=window.DRVU_DATA?'<b class="ok">● Exam data loaded</b>':'<b class="no">● No exam data or server found.</b> Accounts will not work on this device.';return}e.textContent='Checking server…';try{await rq('tick');e.innerHTML='<b class="ok">● Server connected</b>'}catch(x){const s=x&&x.status;e.innerHTML='<b class="no">● Cannot reach the server.</b> '+(/console\.firebase|firebase\.google\.com/.test(CLOUD)?'That is the Firebase console page, not the database address. Copy the address from Realtime Database → Data tab.':s===401||s===403?'Permission denied (error '+s+'). In Firebase → Realtime Database → Rules, paste the rules from firebase-rules.json and press Publish.':s===404?'Database not found (error 404). Check the address in config.js.':s?'Server error '+s+'.':'Network error: the address is wrong, or this device has no internet.')+'<br><small>Address used: '+esc(CLOUD)+'</small>'}}
+function setCloud(){const u=prompt('Paste the Firebase Realtime Database URL (leave empty = this device only):',CLOUD);if(u===null)return;CLOUD=nu(u);try{localStorage.setItem('drvu_cloud',CLOUD)}catch(e){}alert(CLOUD?'Server saved on this device.':'Cloud sync turned off.');chk();if(me&&me.role==='a')pull().then(admin)}
 setInterval(flush,5000);
 setInterval(async()=>{if(!CLOUD||!me||me.role!=='a'||document.hidden)return;if(tab==='rs'||tab==='st'){if([...document.querySelectorAll('.body input,.body textarea')].some(e=>e.value&&e.type!=='file'))return;await pull();admin()}},15000);
 
