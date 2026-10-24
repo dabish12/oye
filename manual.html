@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Manual – DRVU Online Exam</title>
+<style>
+:root{--bg:#f1f4f9;--card:#fff;--tx:#18212f;--mu:#5d6b84;--pr:#0a2150;--pr2:#1b4fa8;--gold:#d4a82a;--bd:#dfe5ef;--in:#f6f8fc;--wa:#fff3d1;--wt:#7a5800}
+@media(prefers-color-scheme:dark){:root{--bg:#0b111b;--card:#141d2c;--tx:#e8edf6;--mu:#98a7c0;--pr2:#6ea3f5;--bd:#25334c;--in:#0e1624;--wa:#33290b;--wt:#f0c850}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.65 "Segoe UI",system-ui,Arial,sans-serif}
+header{background:linear-gradient(135deg,#071a40,#123470);color:#fff;border-bottom:4px solid var(--gold);padding:28px 18px;text-align:center}
+header h1{margin:0;font-size:1.7rem}header p{margin:6px 0 0;color:#cbd9f4}
+main{max-width:900px;margin:0 auto;padding:20px 14px 40px}
+section,nav{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:22px;margin-bottom:18px}
+h2{margin:0 0 12px;color:var(--pr2);font-size:1.3rem;border-bottom:2px solid var(--bd);padding-bottom:8px}
+h2 span{background:var(--gold);color:#241a00;border-radius:8px;padding:1px 10px;margin-right:8px;font-size:1rem}
+h3{margin:18px 0 6px;font-size:1.05rem}
+nav ol{columns:2;margin:0;padding-left:22px}nav a{color:var(--pr2);text-decoration:none}nav a:hover{text-decoration:underline}
+code,pre{background:var(--in);border:1px solid var(--bd);border-radius:6px;font-family:Consolas,monospace;font-size:.9rem}
+code{padding:1px 6px}pre{padding:12px;overflow-x:auto}
+.note{background:var(--wa);color:var(--wt);border-left:5px solid var(--gold);padding:10px 14px;border-radius:8px;margin:12px 0}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{padding:9px 10px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top}th{background:var(--in);color:var(--mu);font-size:.78rem;text-transform:uppercase}
+li{margin:4px 0}footer{text-align:center;color:var(--mu);font-size:.85rem;padding:20px}
+@media(max-width:600px){nav ol{columns:1}}
+@media print{body{background:#fff}section,nav{break-inside:avoid;box-shadow:none}}
+</style></head><body>
+<header><h1>Dembi Dollo Rift Valley University</h1><p>Online Mid Exam System · Computer and Mobile Application · <b>User Manual</b></p></header>
+<main>
+
+<nav><h2>Contents</h2><ol>
+<li><a href="#about">About the system</a></li><li><a href="#files">Files in the folder</a></li><li><a href="#github">Publishing on GitHub</a></li><li><a href="#share">Letting students use any device</a></li>
+<li><a href="#admin">Administrator guide</a></li><li><a href="#pdf">Exam PDF format</a></li><li><a href="#student">Student guide</a></li><li><a href="#trouble">Troubleshooting</a></li><li><a href="#security">Security notes</a></li></ol></nav>
+
+<section id="about"><h2><span>1</span>About the system</h2>
+<p>This is an online multiple-choice exam system built with HTML, CSS and JavaScript only. It has two kinds of users:</p>
+<ul><li><b>Administrator</b> – registers students and gives them a username and password, uploads the exam from a PDF, sets the exam time, resets passwords and views results.</li>
+<li><b>Student</b> – logs in, takes the timed exam, submits it and sees the result. A student cannot repeat the exam.</li></ul>
+<p>The default administrator login is <code>admin</code> / <code>admin123</code>. Change it the first time you log in.</p></section>
+
+<section id="files"><h2><span>2</span>Files in the folder</h2>
+<div class="tw"><table><tr><th>File</th><th>Purpose</th></tr>
+<tr><td><code>index.html</code></td><td>The page students and admin open.</td></tr>
+<tr><td><code>style.css</code></td><td>The design (colors, layout, phone support).</td></tr>
+<tr><td><code>script.js</code></td><td>All the functions: login, exam, timer, results.</td></tr>
+<tr><td><code>config.js</code></td><td>Your Firebase database address (optional).</td></tr>
+<tr><td><code>exam-data.js</code></td><td>Student accounts and exam questions published for students.</td></tr>
+<tr><td><code>firebase-rules.json</code></td><td>Rules to copy into Firebase (only if you use Firebase).</td></tr>
+<tr><td><code>manual.html</code></td><td>This manual.</td></tr></table></div>
+<div class="note">Keep <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, <code>config.js</code> and <code>exam-data.js</code> together in the same folder, with lowercase names.</div></section>
+
+<section id="github"><h2><span>3</span>Publishing on GitHub</h2>
+<ol><li>Go to <b>github.com</b>, sign in, click <b>+ → New repository</b>. Name it <code>drvu-exam</code>, choose <b>Public</b>, click <b>Create repository</b>.</li>
+<li>Click <b>uploading an existing file</b>. Drag in <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, <code>config.js</code> and <code>exam-data.js</code> (the files themselves, not the folder). Click <b>Commit changes</b>.</li>
+<li>Open <b>Settings → Pages</b>. Under <b>Build and deployment</b> choose <b>Deploy from a branch</b>, branch <code>main</code>, folder <code>/ (root)</code>, then <b>Save</b>.</li>
+<li>After 1–2 minutes a link appears, such as <code>https://yourname.github.io/drvu-exam/</code>. This is the link you give to students.</li></ol></section>
+
+<section id="share"><h2><span>4</span>Letting students use any device</h2>
+<p>Data is saved in the browser. For students to log in on their own phones or on center computers, choose one of the two options below.</p>
+
+<h3>Option A – Firebase (automatic, recommended)</h3>
+<p>Accounts, progress and results are shared by all devices. No result codes are needed.</p>
+<ol><li>Go to <b>console.firebase.google.com</b> → <b>Create a project</b>.</li>
+<li>Open <b>Build → Realtime Database → Create database → Start in test mode</b>.</li>
+<li>Open the <b>Rules</b> tab, paste the text from <code>firebase-rules.json</code> and click <b>Publish</b>.</li>
+<li>On the <b>Data</b> tab copy the database address, for example <code>https://drvu-exam-default-rtdb.firebaseio.com</code>.</li>
+<li>Open <code>config.js</code> and paste the address:
+<pre>window.DRVU_CONFIG={
+  cloudUrl:'https://drvu-exam-default-rtdb.firebaseio.com'
+};</pre></li>
+<li>Upload the changed <code>config.js</code> to GitHub (replace the old one).</li>
+<li>Open your site. The login page must say <b>● Server connected</b>. Log in as admin once; the top bar shows <b>● Synced</b>.</li></ol>
+
+<h3>Option B – Publish to GitHub (no database)</h3>
+<p>Student accounts and questions are published as <code>exam-data.js</code>. Results come back as result codes.</p>
+<ol><li>Create a token: GitHub → <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>. Choose <b>only your exam repository</b> and set <b>Contents: Read and write</b>. Copy the token.</li>
+<li>In the system go to <b>Account → Auto-publish to GitHub</b>. Enter the repository as <code>username/repository</code>, the branch <code>main</code> and the token. Click <b>Save details</b>.</li>
+<li>After you register students or change the exam, a banner says <i>Changes are not published to students yet</i>. Click <b>Publish to GitHub now</b>. Students see the update in 1–2 minutes.</li>
+<li>When a student submits, the result page shows a <b>result code</b>. The student sends it to you (Telegram, WhatsApp or email). Go to <b>Results → Import result codes</b>, paste the codes (one per line) and click <b>Import</b>. Scores are recalculated from the answers.</li></ol>
+<div class="note">Without GitHub publishing you can also click <b>Account → Download exam-data.js</b> and upload the file to the repository by hand.</div></section>
+
+<section id="admin"><h2><span>5</span>Administrator guide</h2>
+<h3>Log in and change your password</h3>
+<p>Open the site and log in with <code>admin</code> / <code>admin123</code>. Go to <b>Account</b>, enter the current password and a new password, then <b>Save</b>. To open the admin panel on a device that already holds student data, add <code>#admin</code> to the end of the link.</p>
+<h3>Register students (Students tab)</h3>
+<p>Enter the full name, a username and a password, then click <b>Register</b>. Give each student their username and password. Use the <b>Search</b> box to find a student.</p>
+<ul><li><b>Edit</b> – change the student’s name.</li><li><b>Reset password</b> – set a new password.</li><li><b>Delete</b> – remove the student and their result.</li></ul>
+<p>The status shows <i>Not started</i>, <i>In progress</i> or <i>Submitted</i>.</p>
+<h3>Set up the exam (Exam setup tab)</h3>
+<ul><li><b>Title</b>, <b>Time (minutes)</b> and <b>Exam status</b> (Open or Closed). Students can start only when the exam is Open.</li>
+<li><b>Show answers after submit</b> – choose Yes to let students review their answers.</li>
+<li>Click <b>Save settings</b>.</li></ul>
+<h3>Upload questions</h3>
+<p>Choose a PDF in <b>Upload questions from PDF</b>, or paste the text in the box and click <b>Parse text</b>. Check the questions below, fix any text, and choose the correct answer for each. Use <b>+ Add question</b> to add one by hand. PDF reading needs an internet connection and a text-based PDF (not a scanned image).</p>
+<h3>View results (Results tab)</h3>
+<ul><li>See each student’s score and percentage; the dashboard shows the average.</li>
+<li><b>Details</b> – each answer compared with the correct answer.</li>
+<li><b>Allow retake</b> – deletes a result so the student can sit the exam again.</li>
+<li><b>Download CSV</b> (opens in Excel) and <b>Print</b>.</li></ul>
+<h3>Backup</h3>
+<p>In <b>Account → Backup and restore</b>, click <b>Download backup</b> regularly. You can restore it on another computer or merge results from another computer.</p></section>
+
+<section id="pdf"><h2><span>6</span>Exam PDF format</h2>
+<p>Write each question with a number, options A–D and an answer line:</p>
+<pre>1. Which language is used to style web pages?
+A. HTML
+B. CSS
+C. SQL
+D. Java
+Answer: B
+
+2. Android apps are mainly written in:
+A. Kotlin
+B. COBOL
+C. Pascal
+D. Fortran
+Answer: A</pre>
+<p>If a PDF has no <code>Answer:</code> lines, choose the correct answers in the editor after uploading.</p></section>
+
+<section id="student"><h2><span>7</span>Student guide</h2>
+<ol><li>Open the exam link on a phone or computer.</li>
+<li>Enter the username and password given by the administrator, then <b>Sign in</b>.</li>
+<li>Read the number of questions and the time allowed, then press <b>Start exam</b>. The timer cannot be paused.</li>
+<li>Choose one answer for each question. The bar at the top shows how many you have answered and the time left. If the page is refreshed or you log in on another device, the exam continues with your saved answers.</li>
+<li>Press <b>Submit exam</b>. When the time ends, the exam is submitted automatically.</li>
+<li>Your score appears. You cannot take the exam again unless the administrator allows it.</li>
+<li>If your center uses result codes, copy the code shown on the result page and send it to the administrator.</li></ol></section>
+
+<section id="trouble"><h2><span>8</span>Troubleshooting</h2>
+<div class="tw"><table><tr><th>Problem</th><th>Solution</th></tr>
+<tr><td>Page has no design or buttons do nothing</td><td>Files are not together or names are wrong. Keep all files in one folder with lowercase names. A red message at the top names the missing file.</td></tr>
+<tr><td>“No exam data or server found”</td><td>No <code>exam-data.js</code> was published and no Firebase address is set. Use Option A or B in section 4.</td></tr>
+<tr><td>“Cannot reach the server”</td><td>Check the address in <code>config.js</code> (no extra slash) and that the Firebase rules were published.</td></tr>
+<tr><td>Student account not found on a phone</td><td>Publish the latest accounts (Option B) or check the login page says Server connected (Option A). Wait 1–2 minutes after publishing.</td></tr>
+<tr><td>“Wrong password”</td><td>Check the password in the Students tab. Capital letters in the username do not matter.</td></tr>
+<tr><td>PDF does not load</td><td>Use a text-based PDF with the format in section 6, check internet, or paste the text instead.</td></tr>
+<tr><td>Forgot admin password</td><td>Open the browser console (F12) and run <code>localStorage.removeItem('drvu')</code>, then reload. This deletes local data, so keep backups.</td></tr></table></div></section>
+
+<section id="security"><h2><span>9</span>Security notes</h2>
+<ul><li>Change the default admin password before the exam.</li>
+<li>Student passwords and the answer key are stored in <code>exam-data.js</code> or in Firebase, so a technically skilled person could read them. This system is suitable for classroom and mid-exam use, not for high-stakes testing.</li>
+<li>Keep your GitHub token private and limited to the exam repository. Delete it when you finish.</li>
+<li>Without Firebase, the “one attempt only” rule applies per device.</li></ul></section>
+</main>
+<footer>© Dembi Dollo Rift Valley University · Prepared by <b>Daba Atm</b></footer>
+</body></html>
